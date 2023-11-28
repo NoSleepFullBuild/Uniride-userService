@@ -1,0 +1,14 @@
+stages:
+  - build-tests
+
+authService:
+  image: node:20-alpine
+  tags:
+    - docker
+  stage: build-tests
+  artifacts: 
+    paths:
+      - coverage
+  script:
+    - npm i
+    - npm run build

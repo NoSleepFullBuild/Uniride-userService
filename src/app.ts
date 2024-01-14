@@ -1,5 +1,5 @@
 import * as express from "express"
-import { UserController } from './controllers/userController';
+import { UserController } from './controllers/users.controller';
 import { AppDataSource } from "./app-data-source"
 
 AppDataSource
@@ -17,9 +17,11 @@ app.use(express.json())
 const userController = new UserController();
 
 app.get('/users', userController.getUsers.bind(userController));
-app.get('/users/:id', userController.getUser.bind(userController));
+app.get('/users/:id', userController.getUserById.bind(userController));
 app.post('/users', userController.createUser.bind(userController));
-app.put('/users', userController.updateUser.bind(userController));
+app.put('/users/:id', userController.updateUser.bind(userController));
 app.delete('/users/:id', userController.deleteUser.bind(userController));
 
-app.listen(3000)
+app.listen(3001, ()=>{
+    console.log("User service is running on port 3001")
+})

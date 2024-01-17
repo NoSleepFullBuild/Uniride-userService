@@ -1,10 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '@nosleepfullbuild/uniride-library/dist/entity/base.entity';
 
 @Entity()
-export class User{
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class User extends BaseEntity{
     @Column({ type: 'varchar', length: 255 })
     firstname: string;
 

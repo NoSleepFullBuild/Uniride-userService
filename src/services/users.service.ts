@@ -26,16 +26,27 @@ export class UserService {
         }
     }
 
-    async createUser(userData: { email: string; username: string; password: string; }) {
+    async createUser(userData: { email: string; username: string; password: string; role: string}) {
         try {
             const userExist = await AppDataSource.getRepository(User).findOneBy({ email: userData.email });
             if (userExist) {
                 throw new Error('User already exists');
             }
 
-            const newUser = AppDataSource.getRepository(User).create(userData);
+            const user = {
+                ...userData,
+                createdBy: "admin",
+                updatedBy: "admin",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+
+            console.log(user)
+
+            const newUser = AppDataSource.getRepository(User).create(user);
             const savedUser = await AppDataSource.getRepository(User).save(newUser);
             return savedUser;
+
         } catch (error) {
             throw new Error(error.message);
         }
@@ -43,9 +54,15 @@ export class UserService {
 
     async updateUser(id: number, updateData: Partial<User>) {
         try {
-            const user = await AppDataSource.getRepository(User).findOneBy({ id });
-            if (!user) {
+            const userExist = await AppDataSource.getRepository(User).findOneBy({ id });
+            if (!userExist) {
                 throw new Error('User not found');
+            }
+
+            const user = {
+                ...userExist,
+                updatedBy: "admin",
+                updatedDate: new Date()
             }
 
             AppDataSource.getRepository(User).merge(user, updateData);

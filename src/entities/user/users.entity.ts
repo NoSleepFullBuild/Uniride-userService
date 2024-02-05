@@ -23,4 +23,13 @@ export class User extends BaseEntity{
 
     @Column({ type: 'varchar', length: 255, nullable: true })
     vehicle: string | null;
+
+    // Stock driver id trips if the user is a driver
+    @Column("text", { array: true, default: '{}' })
+    driverTrips: string[];
+
+    // Stock user id trips if the user is a user
+    @Column("text", { array: true, default: '{}' })
+    userTrips: string[];
+    
 }

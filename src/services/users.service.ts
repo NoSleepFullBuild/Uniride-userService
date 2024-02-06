@@ -26,17 +26,27 @@ export class UserService {
         }
     }
 
-    async createUser(userData: { email: string; username: string; password: string; role: string}) {
+    async createUser(data: { firstname: string, lastname: string, email: string; username: string; password: string; role: string, phoneNumber: string, token: string}) {
         try {
-            const userExist = await AppDataSource.getRepository(User).findOneBy({ email: userData.email });
+            const userExist = await AppDataSource.getRepository(User).findOneBy({ email: data.email });
+            
             if (userExist) {
                 throw new Error('User already exists');
             }
 
+            if(data.token == process.env.TOKEN){
+                data.role = "admin"
+            }
+
             const user = {
-                ...userData,
-                createdBy: "admin",
-                updatedBy: "admin",
+                email: data.email,
+                firstname: data.firstname,
+                lastname: data.lastname,
+                username: data.username,
+                role: "user",
+                phoneNumber: data.phoneNumber,
+                createdBy: data.email,
+                updatedBy:data.email,
                 createdAt: new Date(),
                 updatedAt: new Date()
             }

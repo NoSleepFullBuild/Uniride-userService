@@ -5,15 +5,16 @@ import { User } from "./entities/user/users.entity";
 async function createDefaultUser() {
     try {
         const userRepo = AppDataSource.getRepository(User);
-        const defaultUser = await userRepo.findOneBy({ username: "admin" });
+        const defaultUser = await userRepo.findOneBy({ username: "seed" });
 
         if (!defaultUser) {
             const newUser = userRepo.create({
-                firstname: "admin",
-                lastname: "admin",
-                username: "admin",
-                email: "admin@admin.com",
-                role: "admin",
+                firstname: "seed",
+                lastname: "seed",
+                username: "seed",
+                role: "seed",
+                email: "seed@user.com",
+                phoneNumber: '1234567890',
                 createdBy: "system",
                 updatedBy: "system",
             });

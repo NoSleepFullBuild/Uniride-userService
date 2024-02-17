@@ -1,7 +1,7 @@
 // Create class UserService
 
 import { AppDataSource } from "../app-data-source"
-import { User } from '../entities/user/users.entity';
+import { User } from "@nosleepfullbuild/uniride-library/dist/entity/user/user.entity";
 
 export class UserService {
 
@@ -26,7 +26,18 @@ export class UserService {
         }
     }
 
-    async createUser(data: { firstname: string, lastname: string, email: string; username: string; password: string; role: string, phoneNumber: string, token: string}) {
+    async createUser(data: { 
+        authId: number,
+        firstname: string, 
+        lastname: string, 
+        email: string; 
+        username: string; 
+        password: string; 
+        role: string,
+        phoneNumber: string, 
+        token: string
+    }) {
+
         try {
             const userExist = await AppDataSource.getRepository(User).findOneBy({ email: data.email });
             
@@ -39,6 +50,7 @@ export class UserService {
             }
 
             const user = {
+                authId: data.authId,
                 email: data.email,
                 firstname: data.firstname,
                 lastname: data.lastname,
@@ -96,6 +108,22 @@ export class UserService {
             throw new Error(error.message);
         }
     }
+
+    async whoIam(authId: number) {
+
+        try {
+            console.log("authId", authId)
+            const user = await AppDataSource.getRepository(User).findOneBy({ authId });
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+
+    }
+
     
 }
 

@@ -1,6 +1,5 @@
-// src/seed.ts
 import { AppDataSource } from "./app-data-source";
-import { User } from "./entities/user/users.entity";
+import { User } from "@nosleepfullbuild/uniride-library/dist/entity/user/user.entity";
 
 async function createDefaultUser() {
     try {
@@ -9,10 +8,11 @@ async function createDefaultUser() {
 
         if (!defaultUser) {
             const newUser = userRepo.create({
+                authId: 1,
                 firstname: "seed",
                 lastname: "seed",
                 username: "seed",
-                role: "seed",
+                role: "user",
                 email: "seed@user.com",
                 phoneNumber: '1234567890',
                 createdBy: "system",
@@ -22,6 +22,7 @@ async function createDefaultUser() {
             await userRepo.save(newUser);
             console.log("Default user has been created!");
         }
+        
     } catch (error) {
         console.error("Error creating default user:", error);
     }

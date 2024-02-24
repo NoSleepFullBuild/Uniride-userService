@@ -41,6 +41,7 @@ export class UserController {
     
     async updateUser(req: Request, res: Response) {
         try {
+            console.log(req.body)
             const user = await this.userService.updateUser(parseInt(req.params.id), req.body);
             if (user) {
                 res.status(200).json(user);
@@ -54,8 +55,8 @@ export class UserController {
     
     async deleteUser(req: Request, res: Response) {
         try {
-            await this.userService.deleteUser(parseInt(req.params.id));
-            res.status(200).json({ message: 'User deleted successfully' });
+            const deleteUser = await this.userService.deleteUser(parseInt(req.params.id));
+            res.status(200).json(deleteUser);
         } catch (error) {
             if (error.message === 'User not found') {
                 res.status(404).json({ error: error.message });
@@ -67,7 +68,7 @@ export class UserController {
 
     async whoIam(req: Request, res: Response) {
         try {
-            const user = await this.userService.whoIam(parseInt(req.params.authId));
+            const user = await this.userService.whoIam(req.params.email);
             if (user) {
                 res.status(200).json(user);
             } else {

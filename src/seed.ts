@@ -12,7 +12,6 @@ async function createDefaultUser() {
                 firstname: "seed",
                 lastname: "seed",
                 username: "seed",
-                role: "user",
                 email: "seed@user.com",
                 phoneNumber: '1234567890',
                 createdBy: "system",

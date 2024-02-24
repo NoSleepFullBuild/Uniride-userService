@@ -1,5 +1,6 @@
 // Create class UserService
 
+import e = require("express");
 import { AppDataSource } from "../app-data-source"
 import { User } from "@nosleepfullbuild/uniride-library/dist/entity/user/user.entity";
 
@@ -17,6 +18,18 @@ export class UserService {
     async getUserById(id: number) {
         try {
             const user = await AppDataSource.getRepository(User).findOneBy({ id });
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getUserByEmail(email: string) {
+        try {
+            const user = await AppDataSource.getRepository(User).findOneBy({ email });
             if (!user) {
                 throw new Error('User not found');
             }
@@ -45,17 +58,12 @@ export class UserService {
                 throw new Error('User already exists');
             }
 
-            if(data.token == process.env.TOKEN){
-                data.role = "admin"
-            }
-
             const user = {
                 authId: data.authId,
                 email: data.email,
                 firstname: data.firstname,
                 lastname: data.lastname,
                 username: data.username,
-                role: "user",
                 phoneNumber: data.phoneNumber,
                 createdBy: data.email,
                 updatedBy:data.email,
@@ -103,17 +111,16 @@ export class UserService {
             }
 
             await AppDataSource.getRepository(User).delete({ id });
-            return { message: 'User deleted successfully' };
+            return user;
         } catch (error) {
             throw new Error(error.message);
         }
     }
 
-    async whoIam(authId: number) {
+    async whoIam(email: string) {
 
         try {
-            console.log("authId", authId)
-            const user = await AppDataSource.getRepository(User).findOneBy({ authId });
+            const user = await AppDataSource.getRepository(User).findOneBy({ email: email });
             if (!user) {
                 throw new Error('User not found');
             }

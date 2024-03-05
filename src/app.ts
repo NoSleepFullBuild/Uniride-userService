@@ -3,6 +3,8 @@ import { UserController } from './controllers/users.controller';
 import { AppDataSource } from "./app-data-source"
 import createDefaultUser from "./seed";
 
+require('dotenv').config();
+
 AppDataSource
     .initialize()
     .then(async () => {
@@ -29,6 +31,6 @@ app.put('/api/users/:id', userController.updateUser.bind(userController));
 app.delete('/api/users/:id', userController.deleteUser.bind(userController));
 app.get('/api/users/whoIam/:email', userController.whoIam.bind(userController));
 
-app.listen(3001, ()=> {
-    console.log("User service is running on port 3001")
+app.listen(Number(process.env.USER_PORT_DEV), ()=> {
+    console.log("User service is running on port " + process.env.USER_PORT_DEV)
 })

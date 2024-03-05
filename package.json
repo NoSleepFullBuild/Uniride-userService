@@ -2,11 +2,10 @@
   "name": "@nosleepfullbuild/uniride-userservice",
   "version": "1.0.0",
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
-  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/app.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/app.js",
     "test": "jest --coverage",
     "typeorm": "typeorm-ts-node-esm"
   },

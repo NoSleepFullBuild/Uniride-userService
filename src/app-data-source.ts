@@ -2,7 +2,6 @@ import { DataSource } from "typeorm"
 import 'reflect-metadata';
 import { User } from "@nosleepfullbuild/uniride-library/dist/entity/user/user.entity";
 
-// read .env
 require('dotenv').config();
 
 export const AppDataSource = new DataSource({
@@ -15,7 +14,7 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [User],
-    // migrations: ['src/migrations/**/*{.ts,.js}'],
+    migrations: ['src/migrations/**/*{.ts,.js}'],
     subscribers: ['src/subscribers/**/*{.ts,.js}'],
 });
   

@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  auth_service:
+  user_service:
     build:
       context: .
       dockerfile: Dockerfile

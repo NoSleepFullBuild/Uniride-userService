@@ -2,12 +2,14 @@ import { DataSource } from "typeorm"
 import 'reflect-metadata';
 import { User } from "@nosleepfullbuild/uniride-library/dist/entity/user/user.entity";
 
+require('dotenv').config();
+
 export const AppDataSource = new DataSource({
-    host: 'localhost',
-    port: 5432,
-    username: 'user',
-    password: 'password',
-    database: 'postgres',
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    database: process.env.DB_NAME,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     type: 'postgres',
     synchronize: true,
     logging: false,
@@ -15,5 +17,4 @@ export const AppDataSource = new DataSource({
     migrations: ['src/migrations/**/*{.ts,.js}'],
     subscribers: ['src/subscribers/**/*{.ts,.js}'],
 });
-
   

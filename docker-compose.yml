@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  user_service:
+  user_service_prod:
     build:
       context: .
       dockerfile: Dockerfile
